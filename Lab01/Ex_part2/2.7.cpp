@@ -30,46 +30,48 @@ public:
         }
     }
 
-    void printList() {
-        Node* temp = head;
-        while (temp) {
-            std::cout << temp->data << " ";
-            temp = temp->next;
-        }
-        std::cout << std::endl;
-    }
-
-    void removeZeroSumSegments() {
-        if (!head) return;
-
-        Node* dummy = new Node(0); // Dummy node to handle edge cases
+    void removeZeroSumConsecutives() {
+        std::unordered_map<int, Node*> prefixSumMap;
+        Node* dummy = new Node(0);  // Create a dummy node to handle edge cases
         dummy->next = head;
         Node* current = dummy;
-        
-        std::unordered_map<int, Node*> prefixSumMap; // Maps prefix sum to the last node with that sum
         int prefixSum = 0;
 
         while (current) {
             prefixSum += current->data;
 
-            if (prefixSumMap.find(prefixSum) != prefixSumMap.end()) {
-                // Found a zero-sum segment
-                Node* toRemove = prefixSumMap[prefixSum]->next; // Start removing from the next node
+            // Check if this prefixSum has been seen before
+            if (prefixSumMap.count(prefixSum)) {
+                Node* nodeToDelete = prefixSumMap[prefixSum]->next; // Start from the next node
                 int sumToRemove = prefixSum;
-                while (toRemove != current) {
-                    sumToRemove += toRemove->data;
-                    prefixSumMap.erase(sumToRemove);
-                    toRemove = toRemove->next;
+                
+                // Remove nodes until we reach the current node
+                while (nodeToDelete != current) {
+                    sumToRemove += nodeToDelete->data;
+                    prefixSumMap.erase(sumToRemove); // Erase from map
+                    nodeToDelete = nodeToDelete->next;
                 }
-                prefixSumMap[prefixSum]->next = current->next; // Link the previous node to the next node
+
+                // Link the previous node to the current node
+                prefixSumMap[prefixSum]->next = current->next;
             } else {
-                prefixSumMap[prefixSum] = current; // Store the current node for this prefix sum
+                prefixSumMap[prefixSum] = current;
             }
+
             current = current->next;
         }
 
-        head = dummy->next; // Update head to the new list
-        delete dummy; // Free dummy node
+        head = dummy->next;  // Update head
+        delete dummy;  // Clean up dummy node
+    }
+
+    void printList() {
+        Node* temp = head;
+        while (temp) {
+            std::cout << temp->data << " -> ";
+            temp = temp->next;
+        }
+        std::cout << "nullptr\n";
     }
 };
 
@@ -77,21 +79,21 @@ int main() {
     LinkedList list;
     int n, value;
 
-    std::cout << "Enter the number of nodes: ";
+    std::cout << "Enter the number of nodes in the linked list: ";
     std::cin >> n;
 
-    std::cout << "Enter the values of the nodes: ";
-    for (int i = 0; i < n; i++) {
+    std::cout << "Enter the values for the nodes:\n";
+    for (int i = 0; i < n; ++i) {
         std::cin >> value;
         list.insert(value);
     }
 
-    std::cout << "Current list: ";
+    std::cout << "Original Linked List:\n";
     list.printList();
 
-    list.removeZeroSumSegments();
+    list.removeZeroSumConsecutives();
 
-    std::cout << "List after removing zero-sum segments: ";
+    std::cout << "Linked List after removing zero-sum consecutive nodes:\n";
     list.printList();
 
     return 0;

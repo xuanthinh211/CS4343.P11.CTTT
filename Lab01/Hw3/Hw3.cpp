@@ -1,3 +1,7 @@
+// Full Name: NGUYEN XUAN THINH
+// STUDENT ID: 20521967
+// CLASS: CS4343.P11.CTTT
+
 #include <iostream>
 #include <unordered_map>
 #include <string>

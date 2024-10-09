@@ -1,3 +1,4 @@
+// STT:02
 // Full Name: NGUYEN XUAN THINH
 // STUDENT ID: 20521967
 // CLASS: CS4343.P11.CTTT
@@ -63,7 +64,7 @@ int main() {
     int n, val;
 
     // Input for the first list
-    std::cout << "Enter the number of elements for the first list: ";
+    std::cout << "\n Enter the number of elements for the first list: ";
     std::cin >> n;
     std::cout << "Enter the elements of the first list: ";
     for (int i = 0; i < n; ++i) {
@@ -84,8 +85,12 @@ int main() {
     Node* intersection = findIntersection(list1, list2);
 
     // Output the result
-    std::cout << "Intersection of the two lists: ";
-    printList(intersection);
+    if (intersection) {
+        std::cout << "Intersection of the two lists: ";
+        printList(intersection);
+    } else {
+        std::cout << "Intersection of the two lists: null" << std::endl;
+    }
 
     return 0;
 }

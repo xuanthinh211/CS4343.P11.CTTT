@@ -60,7 +60,7 @@ int main() {
     LinkedList list;
     int n, value;
 
-    std::cout << "Enter the number of elements in the list: ";
+    std::cout << "\n Enter the number of elements in the list: ";
     std::cin >> n;
 
     std::cout << "Enter the elements: ";

@@ -71,10 +71,11 @@ int main() {
         }
 
         if (command.find("visit") == 0) {
-            std::string url = command.substr(6); // Get URL after "visit "
-            browser.visit(url);
-            std::cout << "Visited: " << url << std::endl;
-        } 
+        std::string url = command.substr(6); // Get URL after "visit "
+        browser.visit(url);
+        std::cout << "Visited: " << url << std::endl; // In thông báo cho lệnh visit
+        }
+
         else if (command.find("back") == 0) {
             int steps = std::stoi(command.substr(5)); // Get the number of steps
             std::string currentUrl = browser.back(steps);
